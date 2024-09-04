@@ -1,15 +1,15 @@
 struct VOut 
 {
 	float4 position : SV_Position;
-	float4 color : COLOR;
+	float2 tex : TEXCOORD0;
 };
 
-VOut main(float4 pos : POSITION, float4 col : COLOR)
+VOut main(float4 pos : POSITION, float2 tex : TEXCOORD0)
 {
 	VOut output;
 
 	output.position = pos;
-	output.color = col;
+	output.tex = tex;
 
 	return output;
 }
