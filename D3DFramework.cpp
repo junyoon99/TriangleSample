@@ -1,3 +1,4 @@
+#include <sstream>
 #include "D3DFramework.h"
 
 #pragma comment (lib, "d3d11.lib")
@@ -8,6 +9,7 @@ void D3DFramework::Initialize(HINSTANCE hInstance, int width, int height)
 {
 	mScreenWidth = width;
 	mScreenHeight = height;
+	mbPaused = false;
 
 	InitWindow(hInstance);
 	InitD3D();
@@ -32,6 +34,8 @@ void D3DFramework::Destroy()
 
 void D3DFramework::GameLoop()
 {
+	mTimer.Start();
+
 	MSG msg{};
 	while (true)
 	{
@@ -47,8 +51,21 @@ void D3DFramework::GameLoop()
 		}
 		else
 		{
-			//GameLoop
-			RenderFrame();
+			mTimer.Update();
+
+			if (mbPaused) 
+			{
+				Sleep(100);
+			}
+			else
+			{
+				CalculateFPS();
+
+				Update(mTimer.DeltaTime());
+				//GameLoop
+				RenderFrame();
+			}
+
 		}
 	}
 }
@@ -227,6 +244,10 @@ void D3DFramework::InitD3D()
 	);
 
 	OnResize();
+}
+
+void D3DFramework::CalculateFPS()
+{
 }
 
 void D3DFramework::OnResize()

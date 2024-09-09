@@ -6,6 +6,7 @@
 #include <Windows.h>
 #include <wrl/client.h>
 #include <d3d11.h>
+#include "Timer.h"
 
 
 class D3DFramework
@@ -20,12 +21,14 @@ public:
 private:
 	void InitWindow(HINSTANCE hInstance);
 	void InitD3D();
+	void CalculateFPS();
 
 protected:
 	void OnResize();
 	void RenderFrame();
 
 	virtual void Render() {};
+	virtual void Update(float delta) {};
 
 private:
 	const std::wstring CLASS_NAME{ L"MyClassName" };
@@ -40,6 +43,11 @@ protected:
 	bool mMinimized{ false };
 	bool mMaximized{ false };
 	bool mResizing{ false };
+
+	bool mbPaused{ false };
+
+	std::wstring mTitleText{};
+	GameUtil::Timer mTimer;
 
 	Microsoft::WRL::ComPtr<ID3D11Device> mspDevice{};
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> mspDeviceContext;
