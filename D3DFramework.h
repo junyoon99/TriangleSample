@@ -7,6 +7,7 @@
 #include <wrl/client.h>
 #include <d3d11.h>
 #include "Timer.h"
+#include "Input.h"
 
 
 class D3DFramework
@@ -46,8 +47,9 @@ protected:
 
 	bool mbPaused{ false };
 
-	std::wstring mTitleText{};
+	std::wstring mTitleText{ L"Direct3D Sample" };
 	GameUtil::Timer mTimer;
+	GameUtil::Input mInput;
 
 	Microsoft::WRL::ComPtr<ID3D11Device> mspDevice{};
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> mspDeviceContext;
